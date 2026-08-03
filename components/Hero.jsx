@@ -15,11 +15,11 @@ const CERTS = ["amfori", "wrap", "smeta", "gots", "bci", "oekotex"];
 
 export default function Hero() {
   return (
-    <section id="top" className="relative pt-16 pb-20 px-5 text-center overflow-hidden">
+    <section className="relative pt-16 pb-20 px-5 text-center overflow-hidden">
       {/* soft purple radial glow behind the headline */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(124,58,237,0.25),transparent_60%)]" />
 
-      <p className="inline-flex items-center gap-2 text-sm text-textSub mb-5">
+      <p id="top" className="inline-flex items-center gap-2 text-sm text-textSub mb-5">
         <span className="w-2 h-2 rounded-full bg-glow inline-block" />
         The Center That Scales Everything
       </p>
