@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: #07070f;
+  color: #ffffff;
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Bruno Ace SC", sans-serif;
+}
+
+/* A handful of small effects Tailwind's utility classes don't cover on
+   their own. Everything else in the site is plain Tailwind classes. */
+
+/* The purple->pink gradient text used on every section heading's
+   highlighted word, e.g. "A Complete Brand & An <span class="grad">E-Commerce System</span>" */
+.grad {
+  background: linear-gradient(135deg, #9d5cf5, #c084fc);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Soft glowing horizontal divider between sections */
+.hr-glow {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, #2e1a5c, transparent);
+}
+
+/* Numbers that use the Orbitron font (stats, service numbers, stack layers) */
+.font-orbitron {
+  font-family: "Orbitron", sans-serif;
+}
