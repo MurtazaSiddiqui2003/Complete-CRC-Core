@@ -13,7 +13,7 @@ export default function ScrollTopButton() {
 
   return (
     <a
-      href="#top"
+      href="/"
       className={`fixed bottom-8 right-8 w-11 h-11 rounded-full bg-gradient-to-br from-accent to-accentLight
         flex items-center justify-center text-white text-xl z-50 transition-all duration-300
         ${visible ? "opacity-100 visible" : "opacity-0 invisible"}`}
