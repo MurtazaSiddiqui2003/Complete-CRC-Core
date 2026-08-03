@@ -66,7 +66,10 @@ export default function Navbar() {
       {/* Main nav bar */}
       <nav id="top" className="sticky top-0 z-30 bg-bg/90 backdrop-blur border-b border-border">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
-          <a href="#top">
+          {/* Was <a href="#top"> before -- but "#top" is this very sticky
+              navbar, and browsers are inconsistent about scrolling to
+              sticky elements. A direct scrollTo works everywhere. */}
+          <a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
             <Image src="/images/logo-wide.png" alt="CRC Core" width={160} height={40} priority />
           </a>
 
