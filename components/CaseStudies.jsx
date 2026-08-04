@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getCaseStudies } from "../lib/data";
 
 export default async function CaseStudies() {
@@ -30,16 +31,14 @@ export default async function CaseStudies() {
                     c.featured ? "sm:col-span-2 sm:grid sm:grid-cols-2 sm:gap-6 sm:items-center" : ""
                   }`}
                 >
-                  <div className="rounded-xl overflow-hidden mb-5 sm:mb-0">
-                    <video
-                      autoPlay
-                      muted
-                      loop
-                      playsInline
-                      className="w-full h-full object-cover rounded-xl"
-                    >
-                      <source src={c.videoUrl || "/videos/reel.mp4"} type="video/mp4" />
-                    </video>
+                  <div className="relative rounded-xl overflow-hidden mb-5 sm:mb-0 aspect-video">
+                    {c.image ? (
+                      <Image src={c.image} alt={c.title} fill className="object-cover" unoptimized />
+                    ) : (
+                      <video autoPlay muted loop playsInline className="w-full h-full object-cover">
+                        <source src={c.videoUrl || "/videos/reel.mp4"} type="video/mp4" />
+                      </video>
+                    )}
                   </div>
                   <div>
                     <span className="inline-block text-xs px-3 py-1 rounded-full bg-accent/15 text-accentLight mb-3">

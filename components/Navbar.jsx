@@ -42,6 +42,17 @@ export default function Navbar() {
             ×
           </button>
         </div>
+        <div className="flex items-center gap-4 mb-8">
+          <a href="https://www.instagram.com/crc.core" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+            <Image src="/images/logos/instagram.png" alt="Instagram" width={22} height={22} />
+          </a>
+          <a href="mailto:saeed@crccore.com" aria-label="Email">
+            <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
+          </a>
+          <a href="tel:+1-416-616-9901" aria-label="Call">
+            <Image src="/images/logos/phone.png" alt="Call" width={24} height={24} />
+          </a>
+        </div>
         <nav className="flex flex-col gap-4">
           {NAV_LINKS.map((link) => (
             <a
@@ -66,12 +77,26 @@ export default function Navbar() {
       {/* Main nav bar */}
       <nav id="top" className="sticky top-0 z-30 bg-bg/90 backdrop-blur border-b border-border">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
-          {/* Was <a href="#top"> before -- but "#top" is this very sticky
-              navbar, and browsers are inconsistent about scrolling to
-              sticky elements. A direct scrollTo works everywhere. */}
-          <a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
-            <Image src="/images/logo-wide.png" alt="CRC Core" width={160} height={40} priority />
-          </a>
+          <div className="flex items-center gap-4">
+            {/* Was <a href="#top"> before -- but "#top" is this very sticky
+                navbar, and browsers are inconsistent about scrolling to
+                sticky elements. A direct scrollTo works everywhere. */}
+            <a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+              <Image src="/images/logo-wide.png" alt="CRC Core" width={160} height={40} priority />
+            </a>
+
+            <div className="hidden sm:flex items-center gap-3">
+              <a href="https://www.instagram.com/crc.core" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <Image src="/images/logos/instagram.png" alt="Instagram" width={22} height={22} />
+              </a>
+              <a href="mailto:saeed@crccore.com" aria-label="Email">
+                <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
+              </a>
+              <a href="tel:+1-416-616-9901" aria-label="Call">
+                <Image src="/images/logos/phone.png" alt="Call" width={24} height={24} />
+              </a>
+            </div>
+          </div>
 
           <ul className="hidden md:flex items-center gap-8 text-sm text-textSub">
             <li>

@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { compressImageToBase64 } from "../../lib/imageCompress";
 
 // A single reusable "add / edit / delete" screen, used by every content
 // type (case studies, blog, faq, services, testimonials). Each page just
@@ -14,6 +16,8 @@ import Link from "next/link";
 //   "textarea" -> multi-line input
 //   "list"     -> multi-line input, saved as an array (one line = one item)
 //   "checkbox" -> on/off switch (used for "featured")
+//   "image"    -> file picker that compresses the image and stores it
+//                 directly in MongoDB (no external image host needed)
 
 export default function AdminEditor({ title, description, apiPath, fields, backHref = "/admin" }) {
   const [items, setItems] = useState([]);
@@ -206,6 +210,10 @@ function Field({ field, value, onChange }) {
     );
   }
 
+  if (field.type === "image") {
+    return <ImageField field={field} value={value} onChange={onChange} />;
+  }
+
   return (
     <div>
       <label className="text-xs text-textMuted block mb-1">{field.label}</label>
@@ -216,6 +224,51 @@ function Field({ field, value, onChange }) {
         placeholder={field.placeholder}
         className={baseClass}
       />
+    </div>
+  );
+}
+
+function ImageField({ field, value, onChange }) {
+  const [processing, setProcessing] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleFileChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setProcessing(true);
+    setError("");
+    try {
+      const base64 = await compressImageToBase64(file);
+      onChange(base64);
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setProcessing(false);
+    }
+  }
+
+  return (
+    <div>
+      <label className="text-xs text-textMuted block mb-1">{field.label}</label>
+
+      {value && (
+        <div className="relative w-full h-40 mb-2 rounded-lg overflow-hidden border border-border">
+          <Image src={value} alt="Preview" fill className="object-cover" unoptimized />
+        </div>
+      )}
+
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        disabled={processing}
+        className="w-full text-sm text-textSub file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0
+          file:bg-accent file:text-white file:text-sm file:cursor-pointer disabled:opacity-60"
+      />
+
+      {processing && <p className="text-xs text-textMuted mt-1">Processing image…</p>}
+      {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
     </div>
   );
 }

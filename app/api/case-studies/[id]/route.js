@@ -17,6 +17,7 @@ export async function PUT(request, { params }) {
         badge: body.badge || "",
         market: body.market || "",
         points: body.points || [],
+        image: body.image || "",
         videoUrl: body.videoUrl || "/videos/reel.mp4",
         featured: Boolean(body.featured),
         order: Number(body.order) || 0,
