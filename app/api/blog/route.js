@@ -15,6 +15,7 @@ export async function POST(request) {
     title: body.title || "",
     category: body.category || "",
     excerpt: body.excerpt || "",
+    content: body.content || "",
     date: body.date || "",
     emoji: body.emoji || "📝",
     order: Number(body.order) || 0,

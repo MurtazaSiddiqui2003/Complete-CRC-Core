@@ -198,7 +198,7 @@ function Field({ field, value, onChange }) {
         <textarea
           value={value || ""}
           onChange={(e) => onChange(e.target.value)}
-          rows={field.type === "list" ? 4 : 3}
+          rows={field.rows || (field.type === "list" ? 4 : 3)}
           placeholder={field.placeholder}
           className={baseClass}
         />

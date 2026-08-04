@@ -11,7 +11,8 @@ export default function BlogAdminPage() {
       fields={[
         { name: "title", label: "Post Title", type: "text" },
         { name: "category", label: "Category", type: "text", placeholder: "e.g. Shopify, Meta Ads" },
-        { name: "excerpt", label: "Excerpt", type: "textarea", placeholder: "A short 1-2 sentence summary" },
+        { name: "excerpt", label: "Excerpt", type: "textarea", placeholder: "A short 1-2 sentence summary shown on the card" },
+        { name: "content", label: "Full Article", type: "textarea", rows: 10, placeholder: "The full post. Leave a blank line between paragraphs." },
         { name: "date", label: "Date Label", type: "text", placeholder: "e.g. June 2025" },
         { name: "emoji", label: "Emoji Icon", type: "text", placeholder: "e.g. 📉" },
       ]}

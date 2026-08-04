@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getBlogPosts } from "../lib/data";
 
 export default async function Blog() {
@@ -21,7 +22,11 @@ export default async function Blog() {
         ) : (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {posts.map((post) => (
-              <div key={post._id} className="bg-card border border-border rounded-xl overflow-hidden">
+              <Link
+                key={post._id}
+                href={`/blog/${post._id}`}
+                className="bg-card border border-border rounded-xl overflow-hidden hover:border-accent transition-colors"
+              >
                 <div className="h-32 bg-surface flex items-center justify-center text-4xl">
                   {post.emoji}
                 </div>
@@ -34,7 +39,7 @@ export default async function Blog() {
                     <span className="text-accentLight">Read More →</span>
                   </div>
                 </div>
-              </div>
+              </Link>
             ))}
           </div>
         )}

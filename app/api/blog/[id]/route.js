@@ -13,6 +13,7 @@ export async function PUT(request, { params }) {
         title: body.title || "",
         category: body.category || "",
         excerpt: body.excerpt || "",
+        content: body.content || "",
         date: body.date || "",
         emoji: body.emoji || "📝",
         order: Number(body.order) || 0,

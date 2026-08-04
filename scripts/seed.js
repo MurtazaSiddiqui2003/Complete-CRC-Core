@@ -67,6 +67,8 @@ const blogPosts = [
     category: "E-commerce",
     excerpt:
       "It's rarely a product problem. Here's the systemic breakdown we see in almost every brand that comes to us stuck — and how to fix it.",
+    content:
+      "Most founders assume a struggling store means a struggling product. In our experience, that's rarely the real issue. The brands that come to us stuck almost always have a good product buried under a broken system — no clear positioning, a store that isn't built to convert, and marketing that's more guesswork than strategy.\n\nThe pattern shows up the same way every time: traffic without a funnel, ads without creative testing, and a backend that can't keep up once things do start moving. Fixing the product rarely helps. Fixing the system does.\n\nWhat actually moves the needle is treating year one like infrastructure work, not a sprint. Nail the positioning first, build a store that's actually built to convert, and only then start spending on traffic. Brands that skip straight to ads before that foundation exists are the ones we see burn out fastest.",
     date: "June 2025",
     emoji: "📉",
     order: 1,
@@ -76,6 +78,8 @@ const blogPosts = [
     category: "Shopify",
     excerpt:
       "Speed, conversion rate, UX — the three pillars that separate a store that converts from one that just exists. A full breakdown.",
+    content:
+      "A Shopify store existing and a Shopify store converting are two very different things. The gap between them usually comes down to three areas: speed, conversion rate design, and overall user experience.\n\nSpeed matters more than most merchants realize — every extra second of load time measurably costs sales, especially on mobile. Beyond speed, conversion-focused design means clear product photography, frictionless checkout, and trust signals placed where doubt naturally shows up in the buying journey.\n\nUX ties it together: can a first-time visitor find what they want in under 10 seconds? If the answer's no, that's the fix to prioritize before touching anything else — including your ad spend.",
     date: "May 2025",
     emoji: "🛒",
     order: 2,
@@ -85,6 +89,8 @@ const blogPosts = [
     category: "Meta Ads",
     excerpt:
       "The exact framework, creative strategy, and funnel structure we used — and what most brands get completely wrong with paid social.",
+    content:
+      "Most brands treat Meta Ads like a slot machine — throw budget at it and hope something hits. The brands that actually scale treat it like a system: structured creative testing, a funnel that matches the buyer's actual awareness stage, and disciplined budget allocation based on real data, not gut feeling.\n\nOur approach starts with broad creative testing to find what resonates, then narrows spend toward what's actually working instead of spreading it thin across everything. From there, retargeting and lookalike audiences get layered in once there's real purchase data to build from.\n\nThe biggest mistake we see is brands scaling budget before finding a winning angle. Test small, scale what works, kill what doesn't — that discipline is the entire difference between a brand that plateaus at a few thousand a month and one that breaks past $50K.",
     date: "April 2025",
     emoji: "📊",
     order: 3,
