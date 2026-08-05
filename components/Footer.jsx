@@ -16,10 +16,10 @@ export default function Footer() {
               <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={20} height={20} className="invert" unoptimized />
             </a>
             <a href="mailto:saeed@crccore.com" aria-label="Email">
-              <Image src="/images/logos/email.png" alt="Email" width={20} height={20} />
+              <Image src="/images/logos/mail.svg" alt="Email" width={20} height={20} />
             </a>
             <a href="tel:+1-416-616-9901" aria-label="Call">
-              <Image src="/images/logos/phone.png" alt="Call" width={22} height={22} />
+              <Image src="/images/logos/phone.svg" alt="Call" width={22} height={22} />
             </a>
             <a href="https://www.instagram.com/crc.core" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <Image src="/images/logos/instagram-icon.svg" alt="Instagram" width={20} height={20} className="invert" unoptimized />
