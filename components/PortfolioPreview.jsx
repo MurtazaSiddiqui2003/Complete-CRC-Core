@@ -1,20 +1,25 @@
-// Shows a REAL, live, scrollable/clickable preview of another website
-// inside a small card -- not a screenshot. It works by loading the site
-// at full desktop width (1440px) inside an iframe, then shrinking that
-// down to fit the card using a CSS scale transform. Because it's a
-// transform (not a resize), the page inside stays fully interactive --
-// visitors can actually scroll and click around, same as keystone.app's
-// gallery.
-//
-// "cqw" (container query width) units below mean "scale relative to
-// THIS card's own width", so it stays correctly sized whether the card
-// is in a 3-column grid on desktop or full-width on mobile -- no
-// JavaScript needed to measure anything.
+"use client";
 
-const VIRTUAL_WIDTH = 1440;
-const VIRTUAL_HEIGHT = 900;
+import { useState } from "react";
+
+// Shows a REAL, live, scrollable/clickable preview of another website --
+// not a screenshot, and not shrunk down to a tiny illegible thumbnail
+// either. The site loads at its natural size inside a fixed-height
+// window (so it gets its own scrollbar, like looking through a small
+// window into the real page), and "Fullscreen" opens it larger with
+// Mobile / Tablet / Full width toggles -- same idea as keystone.app's
+// gallery.
+
+const DEVICE_WIDTHS = {
+  mobile: 390,
+  tablet: 834,
+  full: "100%",
+};
 
 export default function PortfolioPreview({ site }) {
+  const [fullscreenOpen, setFullscreenOpen] = useState(false);
+  const [device, setDevice] = useState("full");
+
   let hostname = site.url;
   try {
     hostname = new URL(site.url).hostname;
@@ -23,33 +28,27 @@ export default function PortfolioPreview({ site }) {
   }
 
   return (
-    <div className="bg-card border border-border rounded-xl overflow-hidden hover:border-accent transition-colors">
-      {/* Little browser-window chrome, purely decorative, to sell the
-          "this is a real website" effect. */}
-      <div className="flex items-center gap-1.5 px-3 py-2.5 bg-surface border-b border-border">
-        <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
-        <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
-        <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
-        <span className="ml-3 text-xs text-textMuted truncate">{hostname}</span>
+    <div className="bg-card border border-border rounded-xl overflow-hidden">
+      {/* Browser-window chrome bar */}
+      <div className="flex items-center gap-3 px-4 py-2.5 bg-surface border-b border-border">
+        <div className="flex items-center gap-1.5 shrink-0">
+          <span className="w-2.5 h-2.5 rounded-full bg-red-500/70" />
+          <span className="w-2.5 h-2.5 rounded-full bg-yellow-500/70" />
+          <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
+        </div>
+        <span className="text-xs text-textMuted truncate flex-1">{hostname}</span>
+        <button
+          onClick={() => setFullscreenOpen(true)}
+          className="shrink-0 text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full transition-colors"
+        >
+          ⛶ Fullscreen
+        </button>
       </div>
 
-      {/* The live preview itself. */}
-      <div
-        className="relative w-full overflow-hidden bg-white"
-        style={{ containerType: "inline-size", aspectRatio: `${VIRTUAL_WIDTH} / ${VIRTUAL_HEIGHT}` }}
-      >
-        <iframe
-          src={site.url}
-          title={site.title}
-          loading="lazy"
-          className="absolute top-0 left-0 border-0"
-          style={{
-            width: `${VIRTUAL_WIDTH}px`,
-            height: `${VIRTUAL_HEIGHT}px`,
-            transformOrigin: "top left",
-            transform: `scale(calc(100cqw / ${VIRTUAL_WIDTH}))`,
-          }}
-        />
+      {/* The live preview -- real size, fixed height, its own native
+          scrollbar. Nothing is scaled down here. */}
+      <div className="h-[420px] overflow-auto bg-white">
+        <iframe src={site.url} title={site.title} loading="lazy" className="w-full h-full border-0" />
       </div>
 
       <div className="p-5">
@@ -65,6 +64,45 @@ export default function PortfolioPreview({ site }) {
           Visit Full Site ↗
         </a>
       </div>
+
+      {fullscreenOpen && (
+        <div className="fixed inset-0 z-[100] bg-bg flex flex-col">
+          <div className="flex items-center justify-between gap-4 px-5 py-3 border-b border-border bg-surface">
+            <span className="font-semibold text-sm truncate">{site.title}</span>
+
+            <div className="flex items-center gap-2">
+              {["mobile", "tablet", "full"].map((d) => (
+                <button
+                  key={d}
+                  onClick={() => setDevice(d)}
+                  className={`text-xs px-3 py-1.5 rounded-full capitalize transition-colors ${
+                    device === d ? "bg-accent text-white" : "bg-white/10 text-textSub hover:bg-white/20"
+                  }`}
+                >
+                  {d}
+                </button>
+              ))}
+            </div>
+
+            <button
+              onClick={() => setFullscreenOpen(false)}
+              aria-label="Close"
+              className="shrink-0 w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 transition-colors"
+            >
+              ×
+            </button>
+          </div>
+
+          <div className="flex-1 overflow-auto bg-surface flex justify-center py-6">
+            <iframe
+              src={site.url}
+              title={site.title}
+              className="border-0 bg-white h-full"
+              style={{ width: DEVICE_WIDTHS[device], maxWidth: "100%" }}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

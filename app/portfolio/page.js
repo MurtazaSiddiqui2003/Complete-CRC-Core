@@ -37,7 +37,7 @@ export default async function PortfolioPage() {
               No sites added yet. Add some from the admin panel.
             </p>
           ) : (
-            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="max-w-3xl mx-auto space-y-8">
               {sites.map((site) => (
                 <PortfolioPreview key={site._id} site={site} />
               ))}

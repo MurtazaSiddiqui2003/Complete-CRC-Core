@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 
 const SERVICE_LINKS = [
   { icon: "🏗️", label: "Brand Foundation", sub: "Strategy & positioning" },
@@ -24,6 +25,21 @@ const NAV_LINKS = [
 
 export default function Navbar() {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
+
+  // Clicking the logo should always land on the homepage. If we're
+  // already there, just scroll to the top instead of doing a pointless
+  // "navigation" to the same page. If we're on /portfolio, /blog/[id],
+  // etc., send them to the homepage for real.
+  function handleLogoClick(e) {
+    e.preventDefault();
+    if (pathname === "/") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } else {
+      router.push("/");
+    }
+  }
 
   return (
     <>
@@ -80,10 +96,9 @@ export default function Navbar() {
       <nav id="top" className="sticky top-0 z-30 bg-bg/90 backdrop-blur border-b border-border">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
           <div className="flex items-center gap-4">
-            {/* Was <a href="#top"> before -- but "#top" is this very sticky
-                navbar, and browsers are inconsistent about scrolling to
-                sticky elements. A direct scrollTo works everywhere. */}
-            <a href="#top" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}>
+            {/* Always goes to the homepage -- scrolls to top if we're
+                already there, navigates there for real otherwise. */}
+            <a href="/" onClick={handleLogoClick}>
               <Image src="/images/logo-wide.png" alt="CRC Core" width={160} height={40} priority />
             </a>
 
