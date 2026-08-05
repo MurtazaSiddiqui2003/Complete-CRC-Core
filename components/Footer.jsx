@@ -24,7 +24,7 @@ export default function Footer() {
             <a href="https://www.instagram.com/crc.core" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
               <Image src="/images/logos/instagram-logo.svg" alt="Instagram" width={20} height={20} className="invert" unoptimized />
             </a>
-            <a href="https://www.linkedin.com/company/crccore" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/crc-core" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <Image src="/images/logos/linkedin.svg" alt="LinkedIn" width={20} height={20} className="invert" unoptimized />
             </a>
           </div>
