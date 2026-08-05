@@ -18,6 +18,8 @@ import { compressImageToBase64 } from "../../lib/imageCompress";
 //   "checkbox" -> on/off switch (used for "featured")
 //   "image"    -> file picker that compresses the image and stores it
 //                 directly in MongoDB (no external image host needed)
+//   "video"    -> file picker that uploads a short clip into MongoDB
+//                 via GridFS (for files too big for a normal document)
 
 export default function AdminEditor({ title, description, apiPath, fields, backHref = "/admin" }) {
   const [items, setItems] = useState([]);
@@ -214,6 +216,10 @@ function Field({ field, value, onChange }) {
     return <ImageField field={field} value={value} onChange={onChange} />;
   }
 
+  if (field.type === "video") {
+    return <VideoField field={field} value={value} onChange={onChange} />;
+  }
+
   return (
     <div>
       <label className="text-xs text-textMuted block mb-1">{field.label}</label>
@@ -268,6 +274,65 @@ function ImageField({ field, value, onChange }) {
       />
 
       {processing && <p className="text-xs text-textMuted mt-1">Processing image…</p>}
+      {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
+    </div>
+  );
+}
+
+function VideoField({ field, value, onChange }) {
+  const [uploading, setUploading] = useState(false);
+  const [error, setError] = useState("");
+
+  async function handleFileChange(e) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploading(true);
+    setError("");
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload-video", { method: "POST", body: formData });
+      const data = await res.json();
+
+      if (!res.ok) {
+        setError(data.error || "Upload failed.");
+        return;
+      }
+
+      onChange(data.id);
+    } catch {
+      setError("Upload failed. Check your connection and try again.");
+    } finally {
+      setUploading(false);
+    }
+  }
+
+  return (
+    <div>
+      <label className="text-xs text-textMuted block mb-1">{field.label}</label>
+
+      {value && (
+        <video controls className="w-full rounded-lg border border-border mb-2 max-h-56">
+          <source src={`/api/video/${value}`} />
+        </video>
+      )}
+
+      <input
+        type="file"
+        accept="video/*"
+        onChange={handleFileChange}
+        disabled={uploading}
+        className="w-full text-sm text-textSub file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0
+          file:bg-accent file:text-white file:text-sm file:cursor-pointer disabled:opacity-60"
+      />
+
+      <p className="text-xs text-textMuted mt-1">
+        Keep clips short (~30 seconds, under 25MB) so they upload quickly and don&apos;t eat your storage.
+      </p>
+      {uploading && <p className="text-xs text-textMuted mt-1">Uploading…</p>}
       {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
     </div>
   );

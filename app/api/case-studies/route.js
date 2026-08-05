@@ -25,6 +25,7 @@ export async function POST(request) {
     market: body.market || "",
     points: body.points || [],
     image: body.image || "",
+    videoFileId: body.videoFileId || "",
     videoUrl: body.videoUrl || "/videos/reel.mp4",
     featured: Boolean(body.featured),
     order: Number(body.order) || 0,

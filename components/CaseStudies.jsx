@@ -36,7 +36,10 @@ export default async function CaseStudies() {
                       <Image src={c.image} alt={c.title} fill className="object-cover" unoptimized />
                     ) : (
                       <video autoPlay muted loop playsInline className="w-full h-full object-cover">
-                        <source src={c.videoUrl || "/videos/reel.mp4"} type="video/mp4" />
+                        <source
+                          src={c.videoFileId ? `/api/video/${c.videoFileId}` : c.videoUrl || "/videos/reel.mp4"}
+                          type="video/mp4"
+                        />
                       </video>
                     )}
                   </div>
