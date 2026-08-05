@@ -22,7 +22,7 @@ export default function Footer() {
               <Image src="/images/logos/phone.svg" alt="Call" width={22} height={22} />
             </a>
             <a href="https://www.instagram.com/crc.core" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <Image src="/images/logos/instagram-icon.svg" alt="Instagram" width={20} height={20} className="invert" unoptimized />
+              <Image src="/images/logos/instagram-logo.svg" alt="Instagram" width={20} height={20} className="invert" unoptimized />
             </a>
             <a href="https://www.linkedin.com/company/crccore" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <Image src="/images/logos/linkedin.svg" alt="LinkedIn" width={20} height={20} className="invert" unoptimized />
