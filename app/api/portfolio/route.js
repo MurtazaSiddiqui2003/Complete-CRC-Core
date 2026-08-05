@@ -16,6 +16,7 @@ export async function POST(request) {
     url: body.url || "",
     category: body.category || "",
     description: body.description || "",
+    embeddable: body.embeddable !== false,
     order: Number(body.order) || 0,
     createdAt: new Date(),
   });

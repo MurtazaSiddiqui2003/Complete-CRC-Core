@@ -13,6 +13,7 @@ export default function PortfolioAdminPage() {
         { name: "url", label: "Live URL", type: "text", placeholder: "https://sterlingbloom.com" },
         { name: "category", label: "Category", type: "text", placeholder: "e.g. E-commerce, Service Business" },
         { name: "description", label: "Short Description", type: "textarea", placeholder: "One or two sentences about the project" },
+        { name: "embeddable", label: "This site allows live embedding (uncheck if it shows \"refused to connect\" — common for Shopify stores)", type: "checkbox", default: true },
       ]}
     />
   );

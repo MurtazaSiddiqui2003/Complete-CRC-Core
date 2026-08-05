@@ -37,19 +37,40 @@ export default function PortfolioPreview({ site }) {
           <span className="w-2.5 h-2.5 rounded-full bg-green-500/70" />
         </div>
         <span className="text-xs text-textMuted truncate flex-1">{hostname}</span>
-        <button
-          onClick={() => setFullscreenOpen(true)}
-          className="shrink-0 text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full transition-colors"
-        >
-          ⛶ Fullscreen
-        </button>
+        {site.embeddable !== false && (
+          <button
+            onClick={() => setFullscreenOpen(true)}
+            className="shrink-0 text-xs bg-white/10 hover:bg-white/20 px-3 py-1.5 rounded-full transition-colors"
+          >
+            ⛶ Fullscreen
+          </button>
+        )}
       </div>
 
       {/* The live preview -- real size, fixed height, its own native
-          scrollbar. Nothing is scaled down here. */}
-      <div className="h-[420px] overflow-auto bg-white">
-        <iframe src={site.url} title={site.title} loading="lazy" className="w-full h-full border-0" />
-      </div>
+          scrollbar. Nothing is scaled down here. If the site blocks
+          embedding (common for Shopify stores), show a clean fallback
+          instead of the browser's ugly "refused to connect" page. */}
+      {site.embeddable === false ? (
+        <div className="h-[280px] flex flex-col items-center justify-center gap-3 bg-surface text-center px-6">
+          <span className="text-3xl">🔗</span>
+          <p className="text-sm text-textSub">
+            This site doesn&apos;t allow live embedding. Click below to see it directly.
+          </p>
+          <a
+            href={site.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm bg-gradient-to-br from-accent to-accentLight text-white px-5 py-2.5 rounded-full font-medium hover:opacity-90 transition-opacity"
+          >
+            Open {hostname} ↗
+          </a>
+        </div>
+      ) : (
+        <div className="h-[420px] overflow-auto bg-white">
+          <iframe src={site.url} title={site.title} loading="lazy" className="w-full h-full border-0" />
+        </div>
+      )}
 
       <div className="p-5">
         {site.category && <span className="text-xs text-glow">{site.category}</span>}

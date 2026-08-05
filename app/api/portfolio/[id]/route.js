@@ -14,6 +14,7 @@ export async function PUT(request, { params }) {
         url: body.url || "",
         category: body.category || "",
         description: body.description || "",
+        embeddable: body.embeddable !== false,
         order: Number(body.order) || 0,
       },
     }

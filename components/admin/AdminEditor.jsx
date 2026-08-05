@@ -42,7 +42,11 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
   function makeEmptyItem(fieldList) {
     const obj = {};
     fieldList.forEach((f) => {
-      obj[f.name] = f.type === "checkbox" ? false : "";
+      if (f.default !== undefined) {
+        obj[f.name] = f.default;
+      } else {
+        obj[f.name] = f.type === "checkbox" ? false : "";
+      }
     });
     return obj;
   }
