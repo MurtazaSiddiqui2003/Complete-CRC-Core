@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 const SERVICE_LINKS = [
   { icon: "🏗️", label: "Brand Foundation", sub: "Strategy & positioning" },
@@ -14,7 +15,8 @@ const SERVICE_LINKS = [
 
 const NAV_LINKS = [
   { href: "#about", label: "About" },
-  { href: "#cases", label: "Portfolio" },
+  { href: "#cases", label: "Case Studies" },
+  { href: "/portfolio", label: "Portfolio" },
   { href: "#faq", label: "FAQ" },
   { href: "#blog", label: "Blog" },
   { href: "#contact", label: "Contact" },
@@ -132,8 +134,13 @@ export default function Navbar() {
             </li>
             <li>
               <a href="#cases" className="hover:text-white transition-colors">
-                Portfolio
+                Case Studies
               </a>
+            </li>
+            <li>
+              <Link href="/portfolio" className="hover:text-white transition-colors">
+                Portfolio
+              </Link>
             </li>
             <li>
               <a href="#faq" className="hover:text-white transition-colors">

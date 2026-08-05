@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 
 const SECTIONS = [
   { href: "/admin/case-studies", label: "Case Studies", icon: "💼", desc: "The projects shown in 'Trusted by Ambitious Brands'" },
+  { href: "/admin/portfolio", label: "Portfolio Sites", icon: "🖥️", desc: "Live website previews shown on the /portfolio page" },
   { href: "/admin/blog", label: "Blog Posts", icon: "📝", desc: "Cards shown in the 'From The Blog' section" },
   { href: "/admin/faq", label: "FAQ", icon: "❓", desc: "Questions and answers on the FAQ section" },
   { href: "/admin/services", label: "Services", icon: "🛠️", desc: "The 6 service cards in 'Complete Growth System'" },
