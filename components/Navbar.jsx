@@ -65,10 +65,10 @@ export default function Navbar() {
             <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
           </a>
           <a href="mailto:saeed@crccore.com" aria-label="Email">
-            <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
+            <Image src="/images/logos/mail.svg" alt="Email" width={22} height={22} />
           </a>
           <a href="tel:+1-416-616-9901" aria-label="Call">
-            <Image src="/images/logos/phone.png" alt="Call" width={24} height={24} />
+            <Image src="/images/logos/phone.svg" alt="Call" width={24} height={24} />
           </a>
         </div>
         <nav className="flex flex-col gap-4">
@@ -107,10 +107,10 @@ export default function Navbar() {
                 <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
               </a>
               <a href="mailto:saeed@crccore.com" aria-label="Email">
-                <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
+                <Image src="/images/logos/mail.svg" alt="Email" width={22} height={22} />
               </a>
               <a href="tel:+1-416-616-9901" aria-label="Call">
-                <Image src="/images/logos/phone.png" alt="Call" width={24} height={24} />
+                <Image src="/images/logos/phone.svg" alt="Call" width={24} height={24} />
               </a>
             </div>
           </div>
