@@ -1,3 +1,4 @@
+import Script from "next/script";
 import "./globals.css";
 
 // This whole block controls how Google, Facebook, Twitter/X, WhatsApp,
@@ -106,14 +107,20 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
-        {/* Same two brand fonts the old site used. Loaded here once for
-            the whole app instead of in every page. */}
+        {/* Headings use Poppins now instead of the old Bruno Ace SC --
+            same bold, modern feel but far more readable, especially at
+            small sizes on mobile. Orbitron is kept for numbers/stats. */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Bruno+Ace+SC&family=Orbitron:wght@400;600;700;900&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Poppins:wght@500;600;700;800&family=Orbitron:wght@400;600;700;900&display=swap"
           rel="stylesheet"
         />
+        {/* Calendly's popup widget, loaded once here so every page (Hero,
+            Contact, etc.) can just call window.Calendly without each
+            component loading its own copy of the script. */}
+        <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
+        <Script src="https://assets.calendly.com/assets/external/widget.js" strategy="lazyOnload" />
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger

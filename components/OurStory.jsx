@@ -29,7 +29,7 @@ export default function OurStory() {
     <section id="lore" className="py-20 px-5">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div className="flex flex-col items-center">
-          <h5 className="text-sm text-textMuted mb-3">Tap To Flip</h5>
+          <h5 className="text-sm text-white mb-3">Tap To Flip</h5>
           <div
             onClick={() => setFlipped(!flipped)}
             className="cursor-pointer [perspective:1200px] w-full max-w-sm aspect-[1.6/1]"

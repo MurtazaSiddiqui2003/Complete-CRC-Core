@@ -14,7 +14,7 @@ const SERVICE_LINKS = [
 
 const NAV_LINKS = [
   { href: "#about", label: "About" },
-  { href: "#cases", label: "Work" },
+  { href: "#cases", label: "Portfolio" },
   { href: "#faq", label: "FAQ" },
   { href: "#blog", label: "Blog" },
   { href: "#contact", label: "Contact" },
@@ -43,8 +43,8 @@ export default function Navbar() {
           </button>
         </div>
         <div className="flex items-center gap-4 mb-8">
-          <a href="https://www.instagram.com/crc.core" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-            <Image src="/images/logos/instagram.png" alt="Instagram" width={22} height={22} />
+          <a href="https://wa.me/14166169901" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
           </a>
           <a href="mailto:saeed@crccore.com" aria-label="Email">
             <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
@@ -86,8 +86,8 @@ export default function Navbar() {
             </a>
 
             <div className="hidden sm:flex items-center gap-3">
-              <a href="https://www.instagram.com/crc.core" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <Image src="/images/logos/instagram.png" alt="Instagram" width={22} height={22} />
+              <a href="https://wa.me/14166169901" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+                <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
               </a>
               <a href="mailto:saeed@crccore.com" aria-label="Email">
                 <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
@@ -132,7 +132,7 @@ export default function Navbar() {
             </li>
             <li>
               <a href="#cases" className="hover:text-white transition-colors">
-                Work
+                Portfolio
               </a>
             </li>
             <li>

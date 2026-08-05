@@ -1,13 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Script from "next/script";
-
-// The original site used Calendly's real POPUP widget (an overlay on top
-// of the page) instead of just linking away to calendly.com in a new tab.
-// This restores that: we load Calendly's own script once, then call
-// window.Calendly.initPopupWidget() when the button is clicked.
-const CALENDLY_URL = "https://calendly.com/murtazasiddiqui250/30min";
+import CalendlyButton from "./CalendlyButton";
 
 export default function Contact() {
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
@@ -33,23 +27,8 @@ export default function Contact() {
     }
   }
 
-  function openCalendlyPopup(e) {
-    e.preventDefault();
-    // window.Calendly comes from the widget.js script loaded below.
-    if (window.Calendly) {
-      window.Calendly.initPopupWidget({ url: CALENDLY_URL });
-    } else {
-      // Fallback in the rare case the script hasn't finished loading yet.
-      window.open(CALENDLY_URL, "_blank");
-    }
-  }
-
   return (
     <section id="contact" className="py-20 px-5">
-      {/* Calendly's own stylesheet + script for the popup widget */}
-      <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
-      <Script src="https://assets.calendly.com/assets/external/widget.js" strategy="lazyOnload" />
-
       <div className="max-w-2xl mx-auto bg-card border border-border rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(124,58,237,0.2),transparent_60%)]" />
 
@@ -109,13 +88,10 @@ export default function Contact() {
             >
               {status === "sending" ? "Sending…" : "Send Us a Message →"}
             </button>
-            <button
-              type="button"
-              onClick={openCalendlyPopup}
-              className="flex-1 text-center border border-border px-6 py-3 rounded-full font-medium text-textSub hover:text-white hover:border-accent transition-colors"
-            >
-              📅 Book a Free Call
-            </button>
+            {/* Solid white so it's just as visible as the gradient button
+                next to it -- the old outline version blended into the
+                dark background too much. */}
+            <CalendlyButton variant="light" className="flex-1" />
           </div>
 
           {status === "sent" && (

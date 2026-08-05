@@ -1,4 +1,5 @@
 import Image from "next/image";
+import CalendlyButton from "./CalendlyButton";
 
 const PLATFORMS = [
   "shopify",
@@ -19,7 +20,7 @@ export default function Hero() {
       {/* soft purple radial glow behind the headline */}
       <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(124,58,237,0.25),transparent_60%)]" />
 
-      <p id="top" className="inline-flex items-center gap-2 text-sm text-textSub mb-5">
+      <p className="inline-flex items-center gap-2 text-sm text-textSub mb-5">
         <span className="w-2 h-2 rounded-full bg-glow inline-block" />
         The Center That Scales Everything
       </p>
@@ -34,12 +35,7 @@ export default function Hero() {
       </p>
 
       <div className="flex flex-wrap justify-center gap-4 mt-8">
-        <a
-          href="#contact"
-          className="bg-gradient-to-br from-accent to-accentLight text-white px-6 py-3 rounded-full font-medium hover:opacity-90 transition-opacity"
-        >
-          Send Us A Message →
-        </a>
+        <CalendlyButton />
         <a
           href="#cases"
           className="border border-border px-6 py-3 rounded-full font-medium text-textSub hover:text-white hover:border-accent transition-colors"
@@ -52,33 +48,48 @@ export default function Hero() {
         <p className="text-xs uppercase tracking-widest text-textMuted mb-4">
           Our Technology Partners
         </p>
-        <div className="flex flex-wrap justify-center items-center gap-6 opacity-80">
-          {PLATFORMS.map((name) => (
-            <Image
-              key={name}
-              src={`/images/logos/${name}.png`}
-              alt={name}
-              width={70}
-              height={36}
-              className="h-8 w-auto object-contain"
-            />
-          ))}
+        {/* 4 logos per row on mobile (4 + 4), all 8 in one row from
+            tablet width up -- matches how these look best at each size. */}
+        <div className="grid grid-cols-4 sm:grid-cols-8 gap-x-6 gap-y-6 items-center justify-items-center max-w-2xl mx-auto opacity-90">
+          {PLATFORMS.map((name) =>
+            name === "amazon" ? (
+              // Amazon's logo is dark charcoal, which nearly disappears
+              // on this site's dark background -- a small white chip
+              // behind it keeps it visible without changing the logo.
+              <div key={name} className="bg-white rounded-md px-2 py-1.5 flex items-center justify-center">
+                <Image src="/images/logos/amazon.png" alt="Amazon" width={60} height={30} className="h-5 w-auto object-contain" />
+              </div>
+            ) : (
+              <Image
+                key={name}
+                src={`/images/logos/${name}.png`}
+                alt={name}
+                width={70}
+                height={36}
+                className="h-8 w-auto object-contain"
+              />
+            )
+          )}
         </div>
 
-        <p className="text-xs uppercase tracking-widest text-textMuted mt-10 mb-4">
-          Our Certifications
-        </p>
-        <div className="flex flex-wrap justify-center items-center gap-6 opacity-80">
-          {CERTS.map((name) => (
-            <Image
-              key={name}
-              src={`/images/certifications/${name}.png`}
-              alt={name}
-              width={50}
-              height={50}
-              className="h-10 w-10 object-contain rounded-full"
-            />
-          ))}
+        {/* Certifications are hidden for now (not removed) -- remove the
+            "hidden" class below whenever they should show again. */}
+        <div className="hidden">
+          <p className="text-xs uppercase tracking-widest text-textMuted mt-10 mb-4">
+            Our Certifications
+          </p>
+          <div className="flex flex-wrap justify-center items-center gap-6 opacity-80">
+            {CERTS.map((name) => (
+              <Image
+                key={name}
+                src={`/images/certifications/${name}.png`}
+                alt={name}
+                width={50}
+                height={50}
+                className="h-10 w-10 object-contain rounded-full"
+              />
+            ))}
+          </div>
         </div>
       </div>
     </section>

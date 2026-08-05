@@ -16,7 +16,41 @@ const PILLARS = [
   },
 ];
 
-const STACK = ["MARKETING", "AI AUTOMATION", "OPERATIONS", "SOURCING"];
+// These four layers recreate the exact "stacked cards" look from the
+// original site: each one sits slightly smaller and darker than the one
+// above it, with a negative margin so they overlap instead of stacking
+// with gaps -- like a deck of cards fanned out from the top.
+const STACK = [
+  {
+    label: "MARKETING",
+    background: "linear-gradient(135deg, #1D1050, #0F0A28)",
+    color: "#C084FC",
+    boxShadow: "0 0 30px rgba(124, 58, 237, 0.3)",
+    scale: 1,
+    zIndex: 4,
+  },
+  {
+    label: "AI AUTOMATION",
+    background: "linear-gradient(135deg, #150D3A, #0B0B22)",
+    color: "#9D5CF5",
+    scale: 0.93,
+    zIndex: 3,
+  },
+  {
+    label: "OPERATIONS",
+    background: "linear-gradient(135deg, #150D3A, #0B0B22)",
+    color: "#9D5CF5",
+    scale: 0.86,
+    zIndex: 2,
+  },
+  {
+    label: "SOURCING",
+    background: "linear-gradient(135deg, #0E0828, #08081C)",
+    color: "#7C3AED",
+    scale: 0.79,
+    zIndex: 1,
+  },
+];
 
 export default function About() {
   return (
@@ -45,16 +79,23 @@ export default function About() {
           </div>
         </div>
 
-        <div className="flex flex-col gap-4">
-          {STACK.map((label) => (
+        <div className="flex flex-col mx-auto w-full max-w-[270px]">
+          {STACK.map((layer, i) => (
             <a
-              key={label}
+              key={layer.label}
               href="#services"
               className="font-orbitron text-xs tracking-widest h-[76px] rounded-xl border border-borderGlow
-                flex items-center justify-center text-textSub hover:text-white hover:border-accent
-                transition-colors"
+                flex items-center justify-center hover:brightness-125 transition-all"
+              style={{
+                background: layer.background,
+                color: layer.color,
+                boxShadow: layer.boxShadow,
+                transform: `scale(${layer.scale})`,
+                zIndex: layer.zIndex,
+                marginBottom: i < STACK.length - 1 ? "-16px" : 0,
+              }}
             >
-              {label}
+              {layer.label}
             </a>
           ))}
         </div>

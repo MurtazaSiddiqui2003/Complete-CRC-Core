@@ -6,10 +6,27 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-4 gap-10">
         <div className="md:col-span-1 sm:col-span-2">
           <Image src="/images/logo-wide.png" alt="CRC Core" width={140} height={36} className="mb-3" />
-          <p className="text-sm text-textSub">
+          <p className="text-sm text-textSub mb-4">
             We build scalable systems for brands that want real growth. Marketing. Operations.
             Sourcing — all working together.
           </p>
+          <div className="flex items-center gap-4">
+            <a href="https://wa.me/14166169901" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={20} height={20} className="invert" unoptimized />
+            </a>
+            <a href="mailto:saeed@crccore.com" aria-label="Email">
+              <Image src="/images/logos/email.png" alt="Email" width={20} height={20} />
+            </a>
+            <a href="tel:+1-416-616-9901" aria-label="Call">
+              <Image src="/images/logos/phone.png" alt="Call" width={22} height={22} />
+            </a>
+            <a href="https://www.instagram.com/crc.core" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <Image src="/images/logos/instagram-icon.svg" alt="Instagram" width={20} height={20} className="invert" unoptimized />
+            </a>
+            <a href="https://www.linkedin.com/company/crccore" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <Image src="/images/logos/linkedin.svg" alt="LinkedIn" width={20} height={20} className="invert" unoptimized />
+            </a>
+          </div>
         </div>
 
         <div>

@@ -28,7 +28,7 @@ module.exports = {
         textMuted: "#3D4A5C",
       },
       fontFamily: {
-        heading: ["'Bruno Ace SC'", "sans-serif"],
+        heading: ["Poppins", "sans-serif"],
         body: ["Arial", "Helvetica", "sans-serif"],
       },
     },
