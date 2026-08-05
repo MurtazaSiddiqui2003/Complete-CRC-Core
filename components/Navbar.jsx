@@ -20,7 +20,7 @@ const NAV_LINKS = [
   { href: "/portfolio", label: "Portfolio" },
   { href: "#faq", label: "FAQ" },
   { href: "#blog", label: "Blog" },
-  { href: "#contact", label: "Contact" },
+  // { href: "#contact", label: "Contact" },
 ];
 
 export default function Navbar() {
