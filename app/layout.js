@@ -1,5 +1,6 @@
 import Script from "next/script";
 import "./globals.css";
+import { siteConfig } from "../lib/siteConfig";
 
 // This whole block controls how Google, Facebook, Twitter/X, WhatsApp,
 // iMessage etc. show your site when it's linked or searched for --
@@ -98,8 +99,8 @@ const organizationJsonLd = {
   url: SITE_URL,
   logo: `${SITE_URL}/images/crc-logo.png`,
   description: SITE_DESCRIPTION,
-  email: "saeed@crccore.com",
-  telephone: "+1-416-616-9901",
+  email: siteConfig.email,
+  telephone: siteConfig.phoneDisplay,
   sameAs: [],
 };
 

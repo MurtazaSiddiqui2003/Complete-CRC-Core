@@ -1,9 +1,10 @@
 "use client";
 
+import { siteConfig } from "../lib/siteConfig";
+
 // One shared button used anywhere we want to open the Calendly popup
 // (Hero, Contact, etc.) so there's one place to update the link, and the
 // Calendly script only needs to be loaded once (in app/layout.js).
-const CALENDLY_URL = "https://calendly.com/murtazasiddiqui250/30min";
 
 export default function CalendlyButton({
   label = "📅 Book A Free Call",
@@ -13,10 +14,10 @@ export default function CalendlyButton({
   function openPopup(e) {
     e.preventDefault();
     if (window.Calendly) {
-      window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+      window.Calendly.initPopupWidget({ url: siteConfig.calendlyUrl });
     } else {
       // Rare fallback in case the script hasn't finished loading yet.
-      window.open(CALENDLY_URL, "_blank");
+      window.open(siteConfig.calendlyUrl, "_blank");
     }
   }
 

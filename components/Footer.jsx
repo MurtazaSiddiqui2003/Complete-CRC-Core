@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { siteConfig } from "../lib/siteConfig";
 
 export default function Footer() {
   return (
@@ -12,19 +13,19 @@ export default function Footer() {
             Sourcing — all working together.
           </p>
           <div className="flex items-center gap-4">
-            <a href="https://wa.me/14166169901" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+            <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
               <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={20} height={20} className="invert" unoptimized />
             </a>
-            <a href="mailto:saeed@crccore.com" aria-label="Email">
-              <Image src="/images/logos/mail.svg" alt="Email" width={20} height={20} />
+            <a href={`mailto:${siteConfig.email}`} aria-label="Email">
+              <Image src="/images/logos/email.png" alt="Email" width={20} height={20} />
             </a>
-            <a href="tel:+1-416-616-9901" aria-label="Call">
-              <Image src="/images/logos/phone.svg" alt="Call" width={22} height={22} />
+            <a href={`tel:${siteConfig.phoneLink}`} aria-label="Call">
+              <Image src="/images/logos/phone.png" alt="Call" width={22} height={22} />
             </a>
-            <a href="https://www.instagram.com/crc.core" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <Image src="/images/logos/instagram-logo.svg" alt="Instagram" width={20} height={20} className="invert" unoptimized />
+            <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <Image src="/images/logos/instagram-icon.svg" alt="Instagram" width={20} height={20} className="invert" unoptimized />
             </a>
-            <a href="https://www.linkedin.com/company/crc-core" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
               <Image src="/images/logos/linkedin.svg" alt="LinkedIn" width={20} height={20} className="invert" unoptimized />
             </a>
           </div>
@@ -56,8 +57,8 @@ export default function Footer() {
         <div>
           <h5 className="text-sm font-semibold mb-3">Contact</h5>
           <div className="flex flex-col gap-2 text-sm text-textSub">
-            <a href="mailto:saeed@crccore.com" className="hover:text-white transition-colors">saeed@crccore.com</a>
-            <a href="tel:+1-416-616-9901" className="hover:text-white transition-colors">+1-(416)-616-9901</a>
+            <a href={`mailto:${siteConfig.email}`} className="hover:text-white transition-colors">{siteConfig.email}</a>
+            <a href={`tel:${siteConfig.phoneLink}`} className="hover:text-white transition-colors">{siteConfig.phoneDisplay}</a>
             <a href="/pdf/CRC-Core-Portfolio.pdf" download className="hover:text-white transition-colors">Download Portfolio</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
           </div>

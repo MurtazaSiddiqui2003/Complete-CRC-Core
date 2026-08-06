@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter, usePathname } from "next/navigation";
+import { siteConfig } from "../lib/siteConfig";
 
 const SERVICE_LINKS = [
   { icon: "🏗️", label: "Brand Foundation", sub: "Strategy & positioning" },
@@ -20,7 +21,7 @@ const NAV_LINKS = [
   { href: "/portfolio", label: "Portfolio" },
   { href: "#faq", label: "FAQ" },
   { href: "#blog", label: "Blog" },
-  // { href: "#contact", label: "Contact" },
+  { href: "#contact", label: "Contact" },
 ];
 
 export default function Navbar() {
@@ -61,14 +62,14 @@ export default function Navbar() {
           </button>
         </div>
         <div className="flex items-center gap-4 mb-8">
-          <a href="https://wa.me/14166169901" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+          <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
             <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
           </a>
-          <a href="mailto:saeed@crccore.com" aria-label="Email">
-            <Image src="/images/logos/mail.svg" alt="Email" width={22} height={22} />
+          <a href={`mailto:${siteConfig.email}`} aria-label="Email">
+            <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
           </a>
-          <a href="tel:+1-416-616-9901" aria-label="Call">
-            <Image src="/images/logos/phone.svg" alt="Call" width={24} height={24} />
+          <a href={`tel:${siteConfig.phoneLink}`} aria-label="Call">
+            <Image src="/images/logos/phone.png" alt="Call" width={24} height={24} />
           </a>
         </div>
         <nav className="flex flex-col gap-4">
@@ -103,14 +104,14 @@ export default function Navbar() {
             </a>
 
             <div className="hidden sm:flex items-center gap-3">
-              <a href="https://wa.me/14166169901" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
                 <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
               </a>
-              <a href="mailto:saeed@crccore.com" aria-label="Email">
-                <Image src="/images/logos/mail.svg" alt="Email" width={22} height={22} />
+              <a href={`mailto:${siteConfig.email}`} aria-label="Email">
+                <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
               </a>
-              <a href="tel:+1-416-616-9901" aria-label="Call">
-                <Image src="/images/logos/phone.svg" alt="Call" width={24} height={24} />
+              <a href={`tel:${siteConfig.phoneLink}`} aria-label="Call">
+                <Image src="/images/logos/phone.png" alt="Call" width={24} height={24} />
               </a>
             </div>
           </div>
