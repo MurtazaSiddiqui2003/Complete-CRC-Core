@@ -285,30 +285,64 @@ function ImageField({ field, value, onChange }) {
 
 function VideoField({ field, value, onChange }) {
   const [uploading, setUploading] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
+
+  // Vercel rejects any single request over ~4.5MB, so the file gets cut
+  // into 4MB pieces and sent one at a time instead of all at once.
+  const CHUNK_SIZE = 4 * 1024 * 1024;
 
   async function handleFileChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
 
     setUploading(true);
+    setProgress(0);
     setError("");
 
-    const formData = new FormData();
-    formData.append("file", file);
+    const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
+    const uploadId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 
     try {
-      const res = await fetch("/api/upload-video", { method: "POST", body: formData });
-      const data = await res.json();
+      for (let i = 0; i < totalChunks; i++) {
+        const start = i * CHUNK_SIZE;
+        const end = Math.min(start + CHUNK_SIZE, file.size);
 
-      if (!res.ok) {
-        setError(data.error || "Upload failed.");
-        return;
+        const chunkFormData = new FormData();
+        chunkFormData.append("chunk", file.slice(start, end));
+        chunkFormData.append("uploadId", uploadId);
+        chunkFormData.append("index", String(i));
+
+        const res = await fetch("/api/upload-video/chunk", { method: "POST", body: chunkFormData });
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}));
+          throw new Error(data.error || `Upload failed on part ${i + 1} of ${totalChunks}.`);
+        }
+
+        // Reserve the last bit of the bar for the finalize step below.
+        setProgress(Math.round(((i + 1) / totalChunks) * 90));
       }
 
-      onChange(data.id);
-    } catch {
-      setError("Upload failed. Check your connection and try again.");
+      const finalizeRes = await fetch("/api/upload-video/finalize", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          uploadId,
+          totalChunks,
+          filename: file.name,
+          contentType: file.type || "video/mp4",
+        }),
+      });
+      const finalizeData = await finalizeRes.json();
+
+      if (!finalizeRes.ok) {
+        throw new Error(finalizeData.error || "Couldn't finish putting the video together.");
+      }
+
+      setProgress(100);
+      onChange(finalizeData.id);
+    } catch (err) {
+      setError(err.message);
     } finally {
       setUploading(false);
     }
@@ -334,9 +368,20 @@ function VideoField({ field, value, onChange }) {
       />
 
       <p className="text-xs text-textMuted mt-1">
-        Keep clips short (~30 seconds, under 25MB) so they upload quickly and don&apos;t eat your storage.
+        Keep clips reasonably short so they upload quickly and don&apos;t eat your storage.
       </p>
-      {uploading && <p className="text-xs text-textMuted mt-1">Uploading…</p>}
+
+      {uploading && (
+        <div className="mt-2">
+          <div className="w-full h-1.5 bg-surface rounded-full overflow-hidden">
+            <div
+              className="h-full bg-accent transition-all duration-200"
+              style={{ width: `${progress}%` }}
+            />
+          </div>
+          <p className="text-xs text-textMuted mt-1">Uploading… {progress}%</p>
+        </div>
+      )}
       {error && <p className="text-xs text-red-400 mt-1">{error}</p>}
     </div>
   );
