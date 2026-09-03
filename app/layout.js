@@ -25,12 +25,12 @@ export const metadata = {
   description: SITE_DESCRIPTION,
   keywords: [
     "CRC Core",
-    "e-commerce agency",
-    "brand growth system",
-    "Shopify development",
-    "Meta Ads management",
-    "Amazon brand management",
-    "e-commerce marketing agency",
+    "e-commerce growth agency",
+    "e-commerce systems agency",
+    "Shopify store setup and marketing",
+    "Amazon brand management agency",
+    "Meta Ads management for e-commerce",
+    "brand and e-commerce growth system",
     "business automation",
   ],
   authors: [{ name: "CRC Core" }],
@@ -89,19 +89,40 @@ export const metadata = {
   },
 };
 
-// Structured data (JSON-LD) -- this is what lets Google show rich
-// results (business name, logo, contact info) instead of just a plain
-// blue link. Search engines read this, visitors never see it.
-const organizationJsonLd = {
+// Structured data (JSON-LD) -- this is what lets Google potentially show
+// rich results instead of just a plain blue link. Search engines read
+// this, visitors never see it.
+//
+// This uses "ProfessionalService" -- a more specific type of
+// "LocalBusiness" schema, which fits an agency better than a generic
+// "Organization" would. The upgrade over a plain Organization: Google
+// can show things like a map listing, service area, and reviews for
+// LocalBusiness-type schema, which it won't do for a generic Organization.
+//
+// ONE THING MISSING ON PURPOSE: a street address. Add one below (under
+// "address") if CRC Core has a public business address you want
+// associated with local search results -- without it, this still works
+// fine for basic rich results, just without the map/local-pack features.
+const localBusinessJsonLd = {
   "@context": "https://schema.org",
-  "@type": "Organization",
+  "@type": "ProfessionalService",
   name: "CRC Core",
   url: SITE_URL,
   logo: `${SITE_URL}/images/crc-logo.png`,
+  image: `${SITE_URL}/images/logo-wide.png`,
   description: SITE_DESCRIPTION,
   email: siteConfig.email,
   telephone: siteConfig.phoneDisplay,
-  sameAs: [],
+  priceRange: "$$",
+  // address: {
+  //   "@type": "PostalAddress",
+  //   streetAddress: "123 Example St",
+  //   addressLocality: "Toronto",
+  //   addressRegion: "ON",
+  //   postalCode: "A1A 1A1",
+  //   addressCountry: "CA",
+  // },
+  sameAs: [siteConfig.instagramUrl, siteConfig.linkedinUrl].filter(Boolean),
 };
 
 export default function RootLayout({ children }) {
@@ -125,7 +146,7 @@ export default function RootLayout({ children }) {
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
         />
       </head>
       <body>{children}</body>
