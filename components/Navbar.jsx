@@ -62,8 +62,10 @@ export default function Navbar() {
           </button>
         </div>
         <div className="flex items-center gap-4 mb-8">
+          {/* No "invert" filter here -- these are full-color icons, not
+              the old black glyphs that needed flipping to white. */}
           <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-            <Image src="/images/logos/whatsapp.png" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
+            <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} unoptimized />
           </a>
           <a href={`mailto:${siteConfig.email}`} aria-label="Email">
             <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
@@ -94,7 +96,7 @@ export default function Navbar() {
       </div>
 
       {/* Main nav bar */}
-      <nav id="top" className="sticky top-0 z-30 bg-bg/90 backdrop-blur border-b border-border">
+      <nav className="sticky top-0 z-30 bg-bg/90 backdrop-blur border-b border-border">
         <div className="max-w-6xl mx-auto flex items-center justify-between px-5 py-3">
           <div className="flex items-center gap-4">
             {/* Always goes to the homepage -- scrolls to top if we're
@@ -104,8 +106,9 @@ export default function Navbar() {
             </a>
 
             <div className="hidden sm:flex items-center gap-3">
+              {/* No "invert" filter here -- full-color icon now. */}
               <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
+                <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} unoptimized />
               </a>
               <a href={`mailto:${siteConfig.email}`} aria-label="Email">
                 <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
