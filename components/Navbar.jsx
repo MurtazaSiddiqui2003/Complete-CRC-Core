@@ -65,7 +65,7 @@ export default function Navbar() {
           {/* No "invert" filter here -- these are full-color icons, not
               the old black glyphs that needed flipping to white. */}
           <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-            <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} unoptimized />
+            <Image src="/images/logos/whatsapp.png" alt="WhatsApp" width={22} height={22} unoptimized />
           </a>
           <a href={`mailto:${siteConfig.email}`} aria-label="Email">
             <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
