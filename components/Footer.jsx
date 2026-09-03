@@ -17,7 +17,7 @@ export default function Footer() {
                 icons now, not the old black glyphs that needed flipping
                 to white to show up on the dark background. */}
             <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-              <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={20} height={20} unoptimized />
+              <Image src="/images/logos/whatsapp.png" alt="WhatsApp" width={20} height={20} unoptimized />
             </a>
             <a href={`mailto:${siteConfig.email}`} aria-label="Email">
               <Image src="/images/logos/email.png" alt="Email" width={20} height={20} />
@@ -26,10 +26,10 @@ export default function Footer() {
               <Image src="/images/logos/phone.png" alt="Call" width={22} height={22} />
             </a>
             <a href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-              <Image src="/images/logos/instagram-icon.svg" alt="Instagram" width={20} height={20} unoptimized />
+              <Image src="/images/logos/instagram.png" alt="Instagram" width={20} height={20} unoptimized />
             </a>
             <a href={siteConfig.linkedinUrl} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-              <Image src="/images/logos/linkedin.svg" alt="LinkedIn" width={20} height={20} unoptimized />
+              <Image src="/images/logos/linkedin.png" alt="LinkedIn" width={20} height={20} unoptimized />
             </a>
           </div>
         </div>
