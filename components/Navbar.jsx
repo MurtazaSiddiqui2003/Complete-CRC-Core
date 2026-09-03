@@ -63,7 +63,7 @@ export default function Navbar() {
         </div>
         <div className="flex items-center gap-4 mb-8">
           <a href={siteConfig.whatsappUrl} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-            <Image src="/images/logos/whatsapp.svg" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
+            <Image src="/images/logos/whatsapp.png" alt="WhatsApp" width={22} height={22} className="invert" unoptimized />
           </a>
           <a href={`mailto:${siteConfig.email}`} aria-label="Email">
             <Image src="/images/logos/email.png" alt="Email" width={22} height={22} />
