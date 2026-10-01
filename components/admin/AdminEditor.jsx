@@ -58,8 +58,7 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
     fields.forEach((f) => {
       if (f.type === "list" && typeof out[f.name] === "string") {
         out[f.name] = out[f.name]
-          .split("
-")
+          .split("\n")
           .map((line) => line.trim())
           .filter(Boolean);
       }
@@ -73,8 +72,7 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
     const out = { ...item };
     fields.forEach((f) => {
       if (f.type === "list" && Array.isArray(out[f.name])) {
-        out[f.name] = out[f.name].join("
-");
+        out[f.name] = out[f.name].join("\n");
       }
     });
     return out;
