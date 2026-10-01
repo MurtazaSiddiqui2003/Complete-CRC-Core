@@ -290,7 +290,7 @@ function VideoField({ field, value, onChange }) {
 
   // Vercel rejects any single request over ~4.5MB, so the file gets cut
   // into 4MB pieces and sent one at a time instead of all at once.
-  const CHUNK_SIZE = 4 * 1024 * 1024;
+  const CHUNK_SIZE = 4 * 1024 * 1024;\n  const MAX_VIDEO_SIZE = 25 * 1024 * 1024;
 
   async function handleFileChange(e) {
     const file = e.target.files?.[0];
@@ -301,7 +301,7 @@ function VideoField({ field, value, onChange }) {
     setError("");
 
     const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
-    const uploadId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const uploadId = crypto.randomUUID();
 
     try {
       for (let i = 0; i < totalChunks; i++) {
