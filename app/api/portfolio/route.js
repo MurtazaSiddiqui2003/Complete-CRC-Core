@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "../../../lib/mongodb";
+import { readJson, requiredString, optionalString, safeOrder } from "../../../lib/apiValidation";
 
 export async function GET() {
   const db = await getDb();
@@ -8,18 +9,23 @@ export async function GET() {
 }
 
 export async function POST(request) {
-  const body = await request.json();
-  const db = await getDb();
+  const parsed = await readJson(request);
+  if (!parsed.ok) return parsed.response;
+  const title = requiredString(parsed.body.title, "title", 200);
+  const url = requiredString(parsed.body.url, "url", 2000);
+  if (!title.ok || !url.ok) {
+    return NextResponse.json({ error: title.error || url.error }, { status: 400 });
+  }
 
+  const db = await getDb();
   const result = await db.collection("portfolioSites").insertOne({
-    title: body.title || "",
-    url: body.url || "",
-    category: body.category || "",
-    description: body.description || "",
-    embeddable: body.embeddable !== false,
-    order: Number(body.order) || 0,
+    title: title.value,
+    url: url.value,
+    category: optionalString(parsed.body.category, 100),
+    description: optionalString(parsed.body.description, 2000),
+    embeddable: parsed.body.embeddable !== false,
+    order: safeOrder(parsed.body.order),
     createdAt: new Date(),
   });
-
   return NextResponse.json({ ok: true, id: result.insertedId });
 }
