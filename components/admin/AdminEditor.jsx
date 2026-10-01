@@ -58,7 +58,8 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
     fields.forEach((f) => {
       if (f.type === "list" && typeof out[f.name] === "string") {
         out[f.name] = out[f.name]
-          .split("\n")
+          .split("
+")
           .map((line) => line.trim())
           .filter(Boolean);
       }
@@ -72,7 +73,8 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
     const out = { ...item };
     fields.forEach((f) => {
       if (f.type === "list" && Array.isArray(out[f.name])) {
-        out[f.name] = out[f.name].join("\n");
+        out[f.name] = out[f.name].join("
+");
       }
     });
     return out;
@@ -290,11 +292,18 @@ function VideoField({ field, value, onChange }) {
 
   // Vercel rejects any single request over ~4.5MB, so the file gets cut
   // into 4MB pieces and sent one at a time instead of all at once.
-  const CHUNK_SIZE = 4 * 1024 * 1024;\n  const MAX_VIDEO_SIZE = 25 * 1024 * 1024;
+  const CHUNK_SIZE = 4 * 1024 * 1024;
+  const MAX_VIDEO_SIZE = 25 * 1024 * 1024;
 
   async function handleFileChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (file.size > MAX_VIDEO_SIZE) {
+      setError("That video is too large. Maximum size is 25MB.");
+      e.target.value = "";
+      return;
+    }
 
     setUploading(true);
     setProgress(0);
