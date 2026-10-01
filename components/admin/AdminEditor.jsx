@@ -26,6 +26,7 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
   const [loading, setLoading] = useState(true);
   const [newItem, setNewItem] = useState(() => makeEmptyItem(fields));
   const [savingId, setSavingId] = useState(null);
+  const [actionError, setActionError] = useState("");
 
   useEffect(() => {
     loadItems();
@@ -33,10 +34,17 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
 
   async function loadItems() {
     setLoading(true);
-    const res = await fetch(apiPath);
-    const data = await res.json();
-    setItems(data);
-    setLoading(false);
+    setActionError("");
+    try {
+      const res = await fetch(apiPath);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Couldn't load this section.");
+      setItems(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setActionError(err.message || "Couldn't load this section.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   function makeEmptyItem(fieldList) {
@@ -80,13 +88,20 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
 
   async function handleAdd(e) {
     e.preventDefault();
-    await fetch(apiPath, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(serialize({ ...newItem, order: items.length + 1 })),
-    });
-    setNewItem(makeEmptyItem(fields));
-    loadItems();
+    setActionError("");
+    try {
+      const res = await fetch(apiPath, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(serialize({ ...newItem, order: items.length + 1 })),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Couldn't add this item.");
+      setNewItem(makeEmptyItem(fields));
+      await loadItems();
+    } catch (err) {
+      setActionError(err.message || "Couldn't add this item.");
+    }
   }
 
   async function handleSave(item) {
@@ -119,6 +134,7 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
 
         <h1 className="font-heading text-2xl grad mt-4">{title}</h1>
         {description && <p className="text-sm text-textSub mt-1 mb-8">{description}</p>}
+        {actionError && <div role="alert" className="mb-5 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">{actionError}</div>}
 
         {/* Add new item */}
         <form onSubmit={handleAdd} className="bg-card border border-border rounded-xl p-5 mb-10 space-y-4">
