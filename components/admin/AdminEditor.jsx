@@ -106,21 +106,22 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
 
   async function handleSave(item) {
     setSavingId(item._id);
-    await fetch(`${apiPath}/${item._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(serialize(item)),
-    });
-    setSavingId(null);
-    loadItems();
+    setActionError("");
+    try {
+      const res = await fetch(apiPath + "/" + item._id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(serialize(item)),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Couldn't save changes.");
+      await loadItems();
+    } catch (err) {
+      setActionError(err.message || "Couldn't save changes.");
+    } finally {
+      setSavingId(null);
+    }
   }
-
-  async function handleDelete(id) {
-    if (!confirm("Delete this? This can't be undone.")) return;
-    await fetch(`${apiPath}/${id}`, { method: "DELETE" });
-    loadItems();
-  }
-
   function updateItemField(id, name, value) {
     setItems((prev) => prev.map((it) => (it._id === id ? { ...it, [name]: value } : it)));
   }
