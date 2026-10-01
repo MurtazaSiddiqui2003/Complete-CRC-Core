@@ -84,9 +84,6 @@ export const metadata = {
   // The "correct" canonical URL for this page -- prevents duplicate-
   // content issues if the site is ever reachable at more than one URL
   // (e.g. with and without "www").
-  alternates: {
-    canonical: SITE_URL,
-  },
 };
 
 // Structured data (JSON-LD) -- this is what lets Google potentially show
