@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "../../../lib/mongodb";
+import { readJson, requiredString, optionalString, safeOrder } from "../../../lib/apiValidation";
 
 export async function GET() {
   const db = await getDb();
@@ -8,19 +9,24 @@ export async function GET() {
 }
 
 export async function POST(request) {
-  const body = await request.json();
-  const db = await getDb();
+  const parsed = await readJson(request);
+  if (!parsed.ok) return parsed.response;
+  const title = requiredString(parsed.body.title, "title", 200);
+  const content = requiredString(parsed.body.content, "content", 30000);
+  if (!title.ok || !content.ok) {
+    return NextResponse.json({ error: title.error || content.error }, { status: 400 });
+  }
 
+  const db = await getDb();
   const result = await db.collection("blogPosts").insertOne({
-    title: body.title || "",
-    category: body.category || "",
-    excerpt: body.excerpt || "",
-    content: body.content || "",
-    date: body.date || "",
-    emoji: body.emoji || "📝",
-    order: Number(body.order) || 0,
+    title: title.value,
+    category: optionalString(parsed.body.category, 100),
+    excerpt: optionalString(parsed.body.excerpt, 1000),
+    content: content.value,
+    date: optionalString(parsed.body.date, 100),
+    emoji: optionalString(parsed.body.emoji, 20) || "📝",
+    order: safeOrder(parsed.body.order),
     createdAt: new Date(),
   });
-
   return NextResponse.json({ ok: true, id: result.insertedId });
 }
