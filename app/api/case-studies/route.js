@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDb } from "../../../lib/mongodb";
-import { readJson, requiredString, optionalString, safeOrder, safeStringArray } from "../../../lib/apiValidation";
+import { readJson, requiredString, optionalString, optionalDataUrl, safeOrder, safeStringArray } from "../../../lib/apiValidation";
 
 export async function GET() {
   const db = await getDb();
@@ -20,7 +20,7 @@ export async function POST(request) {
     badge: optionalString(parsed.body.badge, 100),
     market: optionalString(parsed.body.market, 300),
     points: safeStringArray(parsed.body.points),
-    image: optionalString(parsed.body.image, 2000),
+    image: optionalDataUrl(parsed.body.image),
     videoFileId: optionalString(parsed.body.videoFileId, 100),
     videoUrl: optionalString(parsed.body.videoUrl, 2000) || "/videos/reel.mp4",
     featured: parsed.body.featured === true,
