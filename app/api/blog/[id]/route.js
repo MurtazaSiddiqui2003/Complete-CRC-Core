@@ -1,31 +1,38 @@
 import { NextResponse } from "next/server";
-import { ObjectId } from "mongodb";
 import { getDb } from "../../../../lib/mongodb";
+import { getObjectId, readJson, requiredString, optionalString, safeOrder } from "../../../../lib/apiValidation";
 
 export async function PUT(request, { params }) {
-  const body = await request.json();
+  const id = getObjectId(params.id);
+  if (!id) return NextResponse.json({ error: "Invalid blog post id." }, { status: 400 });
+  const parsed = await readJson(request);
+  if (!parsed.ok) return parsed.response;
+  const title = requiredString(parsed.body.title, "title", 200);
+  const content = requiredString(parsed.body.content, "content", 30000);
+  if (!title.ok || !content.ok) return NextResponse.json({ error: title.error || content.error }, { status: 400 });
+
   const db = await getDb();
-
-  await db.collection("blogPosts").updateOne(
-    { _id: new ObjectId(params.id) },
-    {
-      $set: {
-        title: body.title || "",
-        category: body.category || "",
-        excerpt: body.excerpt || "",
-        content: body.content || "",
-        date: body.date || "",
-        emoji: body.emoji || "📝",
-        order: Number(body.order) || 0,
-      },
-    }
+  const result = await db.collection("blogPosts").updateOne(
+    { _id: id },
+    { $set: {
+      title: title.value,
+      category: optionalString(parsed.body.category, 100),
+      excerpt: optionalString(parsed.body.excerpt, 1000),
+      content: content.value,
+      date: optionalString(parsed.body.date, 100),
+      emoji: optionalString(parsed.body.emoji, 20) || "📝",
+      order: safeOrder(parsed.body.order)
+    } }
   );
-
+  if (!result.matchedCount) return NextResponse.json({ error: "Blog post not found." }, { status: 404 });
   return NextResponse.json({ ok: true });
 }
 
 export async function DELETE(request, { params }) {
+  const id = getObjectId(params.id);
+  if (!id) return NextResponse.json({ error: "Invalid blog post id." }, { status: 400 });
   const db = await getDb();
-  await db.collection("blogPosts").deleteOne({ _id: new ObjectId(params.id) });
+  const result = await db.collection("blogPosts").deleteOne({ _id: id });
+  if (!result.deletedCount) return NextResponse.json({ error: "Blog post not found." }, { status: 404 });
   return NextResponse.json({ ok: true });
 }

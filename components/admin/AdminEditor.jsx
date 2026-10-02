@@ -26,6 +26,7 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
   const [loading, setLoading] = useState(true);
   const [newItem, setNewItem] = useState(() => makeEmptyItem(fields));
   const [savingId, setSavingId] = useState(null);
+  const [actionError, setActionError] = useState("");
 
   useEffect(() => {
     loadItems();
@@ -33,10 +34,17 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
 
   async function loadItems() {
     setLoading(true);
-    const res = await fetch(apiPath);
-    const data = await res.json();
-    setItems(data);
-    setLoading(false);
+    setActionError("");
+    try {
+      const res = await fetch(apiPath);
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Couldn't load this section.");
+      setItems(Array.isArray(data) ? data : []);
+    } catch (err) {
+      setActionError(err.message || "Couldn't load this section.");
+    } finally {
+      setLoading(false);
+    }
   }
 
   function makeEmptyItem(fieldList) {
@@ -80,32 +88,40 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
 
   async function handleAdd(e) {
     e.preventDefault();
-    await fetch(apiPath, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(serialize({ ...newItem, order: items.length + 1 })),
-    });
-    setNewItem(makeEmptyItem(fields));
-    loadItems();
+    setActionError("");
+    try {
+      const res = await fetch(apiPath, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(serialize({ ...newItem, order: items.length + 1 })),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Couldn't add this item.");
+      setNewItem(makeEmptyItem(fields));
+      await loadItems();
+    } catch (err) {
+      setActionError(err.message || "Couldn't add this item.");
+    }
   }
 
   async function handleSave(item) {
     setSavingId(item._id);
-    await fetch(`${apiPath}/${item._id}`, {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(serialize(item)),
-    });
-    setSavingId(null);
-    loadItems();
+    setActionError("");
+    try {
+      const res = await fetch(apiPath + "/" + item._id, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(serialize(item)),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(data.error || "Couldn't save changes.");
+      await loadItems();
+    } catch (err) {
+      setActionError(err.message || "Couldn't save changes.");
+    } finally {
+      setSavingId(null);
+    }
   }
-
-  async function handleDelete(id) {
-    if (!confirm("Delete this? This can't be undone.")) return;
-    await fetch(`${apiPath}/${id}`, { method: "DELETE" });
-    loadItems();
-  }
-
   function updateItemField(id, name, value) {
     setItems((prev) => prev.map((it) => (it._id === id ? { ...it, [name]: value } : it)));
   }
@@ -119,6 +135,7 @@ export default function AdminEditor({ title, description, apiPath, fields, backH
 
         <h1 className="font-heading text-2xl grad mt-4">{title}</h1>
         {description && <p className="text-sm text-textSub mt-1 mb-8">{description}</p>}
+        {actionError && <div role="alert" className="mb-5 rounded-lg border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-300">{actionError}</div>}
 
         {/* Add new item */}
         <form onSubmit={handleAdd} className="bg-card border border-border rounded-xl p-5 mb-10 space-y-4">
@@ -291,17 +308,24 @@ function VideoField({ field, value, onChange }) {
   // Vercel rejects any single request over ~4.5MB, so the file gets cut
   // into 4MB pieces and sent one at a time instead of all at once.
   const CHUNK_SIZE = 4 * 1024 * 1024;
+  const MAX_VIDEO_SIZE = 25 * 1024 * 1024;
 
   async function handleFileChange(e) {
     const file = e.target.files?.[0];
     if (!file) return;
+
+    if (file.size > MAX_VIDEO_SIZE) {
+      setError("That video is too large. Maximum size is 25MB.");
+      e.target.value = "";
+      return;
+    }
 
     setUploading(true);
     setProgress(0);
     setError("");
 
     const totalChunks = Math.ceil(file.size / CHUNK_SIZE);
-    const uploadId = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const uploadId = crypto.randomUUID();
 
     try {
       for (let i = 0; i < totalChunks; i++) {

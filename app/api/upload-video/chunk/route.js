@@ -1,35 +1,54 @@
 import { NextResponse } from "next/server";
 import { getDb } from "../../../../lib/mongodb";
 
-// Part 1 of 2 for uploading a video (see finalize/route.js for part 2).
-//
-// WHY THIS EXISTS: Vercel's free hosting plan rejects any single request
-// bigger than ~4.5MB, before our code even sees it. A 20-30 second video
-// is almost always bigger than that. So instead of sending the whole
-// file in one request, the browser slices it into small pieces (a few
-// MB each) and sends them one at a time to THIS route, which just saves
-// each piece. Once every piece has arrived, /finalize stitches them back
-// together into one real video file.
+const CHUNK_SIZE = 4 * 1024 * 1024;
+const MAX_SIZE = 25 * 1024 * 1024;
+const MAX_CHUNKS = Math.ceil(MAX_SIZE / CHUNK_SIZE);
+
+function validUploadId(value) {
+  return typeof value === "string" && /^[A-Za-z0-9_-]{8,100}$/.test(value);
+}
 
 export async function POST(request) {
   const formData = await request.formData();
   const chunk = formData.get("chunk");
   const uploadId = formData.get("uploadId");
-  const index = formData.get("index");
+  const index = Number(formData.get("index"));
 
-  if (!chunk || !uploadId || index === null) {
-    return NextResponse.json({ error: "Missing chunk data." }, { status: 400 });
+  if (!(chunk instanceof File) || !validUploadId(uploadId) || !Number.isInteger(index)) {
+    return NextResponse.json({ error: "Invalid upload chunk." }, { status: 400 });
   }
 
-  const buffer = Buffer.from(await chunk.arrayBuffer());
+  if (index < 0 || index >= MAX_CHUNKS || chunk.size > CHUNK_SIZE) {
+    return NextResponse.json({ error: "Invalid chunk size or index." }, { status: 400 });
+  }
 
   const db = await getDb();
-  await db.collection("videoUploadChunks").insertOne({
-    uploadId: String(uploadId),
-    index: Number(index),
-    data: buffer,
-    createdAt: new Date(),
-  });
+  const collection = db.collection("videoUploadChunks");
+
+  await collection.createIndex(
+    { createdAt: 1 },
+    { expireAfterSeconds: 3600 }
+  );
+  await collection.createIndex(
+    { uploadId: 1, index: 1 },
+    { unique: true }
+  );
+
+  const data = Buffer.from(await chunk.arrayBuffer());
+
+  await collection.updateOne(
+    { uploadId, index },
+    {
+      $set: {
+        data,
+        size: data.length,
+        createdAt: new Date(),
+      },
+      $setOnInsert: { uploadId, index },
+    },
+    { upsert: true }
+  );
 
   return NextResponse.json({ ok: true });
 }

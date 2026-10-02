@@ -9,6 +9,7 @@ export const dynamic = "force-dynamic";
 export const metadata = {
   title: "Portfolio",
   description: "Live previews of websites built by CRC Core.",
+  alternates: { canonical: "https://crccore.com/portfolio" },
 };
 
 export default async function PortfolioPage() {
