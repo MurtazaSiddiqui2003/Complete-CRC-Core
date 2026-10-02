@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { ObjectId, GridFSBucket } from "mongodb";
 import { getDb } from "../../../../lib/mongodb";
-import { getObjectId, readJson, requiredString, optionalString, safeOrder, safeStringArray } from "../../../../lib/apiValidation";
+import { getObjectId, readJson, requiredString, optionalString, optionalDataUrl, safeOrder, safeStringArray } from "../../../../lib/apiValidation";
 
 async function deleteVideoFile(db, videoFileId) {
   const fileId = getObjectId(videoFileId);
@@ -35,7 +35,7 @@ export async function PUT(request, { params }) {
       badge: optionalString(parsed.body.badge, 100),
       market: optionalString(parsed.body.market, 300),
       points: safeStringArray(parsed.body.points),
-      image: optionalString(parsed.body.image, 2000),
+      image: optionalDataUrl(parsed.body.image),
       videoFileId: optionalString(parsed.body.videoFileId, 100),
       videoUrl: optionalString(parsed.body.videoUrl, 2000) || "/videos/reel.mp4",
       featured: parsed.body.featured === true,
