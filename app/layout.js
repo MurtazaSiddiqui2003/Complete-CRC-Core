@@ -47,7 +47,7 @@ export const metadata = {
     locale: "en_US",
     images: [
       {
-        url: "/images/logo-wide.png",
+        url: `${SITE_URL}/images/logo-wide.png`,
         width: 1200,
         height: 630,
         alt: "CRC Core",
@@ -60,7 +60,7 @@ export const metadata = {
     card: "summary_large_image",
     title: SITE_TITLE,
     description: SITE_DESCRIPTION,
-    images: ["/images/logo-wide.png"],
+    images: [`${SITE_URL}/images/logo-wide.png`],
   },
 
   // Tells Google "yes, index this site and follow its links" -- the
