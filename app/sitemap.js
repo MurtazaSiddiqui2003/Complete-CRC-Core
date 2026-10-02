@@ -32,6 +32,6 @@ export default async function sitemap() {
       changeFrequency: "monthly",
       priority: 0.8,
     },
-    ...blogUrls,
+    {\n      url: "https://crccore.com/case-studies",\n      lastModified: new Date(),\n      changeFrequency: "monthly",\n      priority: 0.8,\n    },\n    ...blogUrls,
   ];
 }
