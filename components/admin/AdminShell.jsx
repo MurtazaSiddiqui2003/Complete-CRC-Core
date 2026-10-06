@@ -63,6 +63,7 @@ export default function AdminShell({ children }) {
             ))}
 
             <p className="px-3 pb-2 pt-7 text-[10px] font-semibold uppercase tracking-[0.18em] text-textMuted">System</p>
+            <Link href="/admin/settings" onClick={() => setOpen(false)} className={`flex items-center gap-3 px-3 py-2.5 text-sm ${active("/admin/settings") ? "bg-accent/15 text-white border-l-2 border-accent" : "text-textSub hover:bg-white/5 hover:text-white"}`}><span className="flex h-7 w-7 items-center justify-center text-xs text-accentLight">⚙</span>Site Settings</Link>
             <Link href="/" target="_blank" className="flex items-center gap-3 px-3 py-2.5 text-sm text-textSub hover:bg-white/5 hover:text-white">
               <span className="flex h-7 w-7 items-center justify-center text-xs text-accentLight">↗</span>
               View Live Site
