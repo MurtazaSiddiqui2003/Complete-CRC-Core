@@ -50,6 +50,7 @@ export default function AdminShell({ children }) {
 
           <nav className="flex-1 space-y-1 overflow-y-auto p-4">
             <p className="px-3 pb-2 pt-1 text-[10px] font-semibold uppercase tracking-[0.18em] text-textMuted">Manage</p>
+            <Link href="/admin/inquiries" onClick={() => setOpen(false)} className={`flex items-center gap-3 px-3 py-2.5 text-sm ${active("/admin/inquiries") ? "bg-accent/15 text-white border-l-2 border-accent" : "text-textSub hover:bg-white/5 hover:text-white"}`}><span className="flex h-7 w-7 items-center justify-center text-xs text-accentLight">◉</span>Inquiries</Link>
             {NAV.map((item) => (
               <Link
                 key={item.href}
