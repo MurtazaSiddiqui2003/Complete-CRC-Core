@@ -15,7 +15,8 @@ const PLATFORMS = [
 
 const CERTS = ["amfori", "wrap", "smeta", "gots", "bci", "oekotex"];
 
-export default async function Hero() {\n  const content = await getSiteContent();
+export default async function Hero() {
+  const content = await getSiteContent();
   return (
     <section className="relative pt-16 pb-20 px-5 text-center overflow-hidden">
       {/* soft purple radial glow behind the headline */}
@@ -31,8 +32,7 @@ export default async function Hero() {\n  const content = await getSiteContent()
       </h1>
 
       <p className="max-w-xl mx-auto mt-6 text-textSub">
-        We build scalable systems for brands that want real growth. Marketing. Operations.
-        Sourcing. All working together.
+        {content.heroDescription}
       </p>
 
       <div className="flex flex-wrap justify-center gap-4 mt-8">
