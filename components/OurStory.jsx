@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";\nimport { getSiteContent } from "../lib/siteContent";
+import Image from "next/image";
 
 const TIMELINE = [
   {
@@ -22,7 +22,7 @@ const TIMELINE = [
   },
 ];
 
-export default async function OurStory() {\n  const content = await getSiteContent();
+export default function OurStory() {
   const [flipped, setFlipped] = useState(false);
 
   return (
@@ -52,9 +52,9 @@ export default async function OurStory() {\n  const content = await getSiteConte
         </div>
 
         <div>
-          <p className="text-sm text-glow mb-3">{content.storyEyebrow}</p>
+          <p className="text-sm text-glow mb-3">Our Story</p>
           <h2 className="text-3xl md:text-4xl font-bold mb-5">
-            {content.storyTitle}
+            The CRC Core Origin
           </h2>
           <p className="text-textSub mb-8">
             We started with a simple observation — great products were dying inside broken
