@@ -1,8 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { siteConfig } from "../lib/siteConfig";
+import { siteConfig } from "../lib/siteConfig";\nimport { getSiteContent } from "../lib/siteContent";
 
-export default function Footer() {
+export default async function Footer() {\n  const content = await getSiteContent();
   return (
     <footer className="border-t border-border py-14 px-5">
       <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-4 gap-10">
@@ -70,7 +70,7 @@ export default function Footer() {
 
       <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2 mt-12 pt-6 border-t border-border text-xs text-textMuted">
         <p>© {new Date().getFullYear()} CRC Core. All rights reserved.</p>
-        <p>The Center That Scales Everything</p>
+        <p>{content.footerTagline}</p>
       </div>
     </footer>
   );
