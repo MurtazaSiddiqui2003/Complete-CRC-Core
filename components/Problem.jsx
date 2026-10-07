@@ -1,4 +1,6 @@
-import { getSiteContent } from "../lib/siteContent";\n\nconst PAIN_POINTS = [
+import { getSiteContent } from "../lib/siteContent";
+
+const PAIN_POINTS = [
   "No clear brand positioning",
   "Random marketing with no direction",
   "Low-converting websites",
@@ -23,7 +25,8 @@ const ANSWERS = [
   },
 ];
 
-export default async function Problem() {\n  const content = await getSiteContent();
+export default async function Problem() {
+  const content = await getSiteContent();
   return (
     <section id="problem" className="py-20 px-5">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
@@ -33,8 +36,7 @@ export default async function Problem() {\n  const content = await getSiteConten
             {content.problemTitle}
           </h2>
           <p className="text-textSub mb-6">
-            They fail because of broken systems. Random efforts with no structure lead to one
-            place — stuck.
+            {content.problemDescription}
           </p>
 
           <div className="space-y-3 mb-6">
