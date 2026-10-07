@@ -18,8 +18,10 @@ import Faq from "../components/Faq";
 import Blog from "../components/Blog";
 import Contact from "../components/Contact";
 import Footer from "../components/Footer";
+import { getSiteContent } from "../lib/siteContent";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const content = await getSiteContent();
   return (
     <>
       <ParticleBackground />
@@ -44,7 +46,7 @@ export default function HomePage() {
         <div className="hr-glow" />
         <Blog />
         <div className="hr-glow" />
-        <Contact />
+        <Contact content={content} />
         <Footer />
       </div>
     </>
