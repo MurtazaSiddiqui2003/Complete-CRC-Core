@@ -1,16 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
-import { siteConfig } from "../lib/siteConfig";\nimport { getSiteContent } from "../lib/siteContent";
+import { siteConfig } from "../lib/siteConfig";
+import { getSiteContent } from "../lib/siteContent";
 
-export default async function Footer() {\n  const content = await getSiteContent();
+export default async function Footer() {
+  const content = await getSiteContent();
   return (
     <footer className="border-t border-border py-14 px-5">
       <div className="max-w-6xl mx-auto grid sm:grid-cols-2 md:grid-cols-4 gap-10">
         <div className="md:col-span-1 sm:col-span-2">
           <Image src="/images/logo-wide.png" alt="CRC Core" width={140} height={36} className="mb-3" />
           <p className="text-sm text-textSub mb-4">
-            We build scalable systems for brands that want real growth. Marketing. Operations.
-            Sourcing — all working together.
+            {content.footerDescription}
           </p>
           <div className="flex items-center gap-4">
             {/* No "invert" filter here anymore -- these are full-color
