@@ -1,4 +1,4 @@
-const PAIN_POINTS = [
+import { getSiteContent } from "../lib/siteContent";\n\nconst PAIN_POINTS = [
   "No clear brand positioning",
   "Random marketing with no direction",
   "Low-converting websites",
@@ -23,14 +23,14 @@ const ANSWERS = [
   },
 ];
 
-export default function Problem() {
+export default async function Problem() {\n  const content = await getSiteContent();
   return (
     <section id="problem" className="py-20 px-5">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
         <div>
-          <p className="text-sm text-glow mb-3">The Real Problem</p>
+          <p className="text-sm text-glow mb-3">{content.problemEyebrow}</p>
           <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-5">
-            Brands don&apos;t fail because of <span className="grad">bad products.</span>
+            {content.problemTitle}
           </h2>
           <p className="text-textSub mb-6">
             They fail because of broken systems. Random efforts with no structure lead to one
