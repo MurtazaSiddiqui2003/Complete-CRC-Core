@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import CalendlyButton from "./CalendlyButton";
+import CalendlyButton from "./CalendlyButton";\nimport { getSiteContent } from "../lib/siteContent";
 
-export default function Contact() {
+export default function Contact({ content }) {
   const [status, setStatus] = useState("idle");
 
   async function handleSubmit(e) {
@@ -33,9 +33,9 @@ export default function Contact() {
     <section id="contact" className="py-20 px-5">
       <div className="max-w-2xl mx-auto bg-card border border-border rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
         <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(124,58,237,0.2),transparent_60%)]" />
-        <p className="text-sm text-glow mb-3">Ready to Scale?</p>
-        <h2 className="text-3xl md:text-4xl font-bold mb-4">One system. <br /><span className="grad">Built to scale.</span></h2>
-        <p className="text-textSub mb-8">Tell us about your brand and let&apos;s talk about what it would take to build your complete growth system.</p>
+        <p className="text-sm text-glow mb-3">{content.contactEyebrow}</p>
+        <h2 className="text-3xl md:text-4xl font-bold mb-4">{content.contactTitle.includes("Built to scale") ? <>One system. <br /><span className="grad">Built to scale.</span></> : content.contactTitle}</h2>
+        <p className="text-textSub mb-8">{content.contactDescription}</p>
 
         <form onSubmit={handleSubmit} className="space-y-4 text-left">
           <div><label htmlFor="name" className="text-xs text-textMuted block mb-1">Your Name</label><input id="name" name="name" type="text" required className="w-full bg-surface border border-border rounded-lg px-4 py-3 text-sm focus:outline-none focus:border-accent" /></div>
