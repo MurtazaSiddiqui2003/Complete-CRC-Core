@@ -1,4 +1,6 @@
-import { getSiteContent } from "../lib/siteContent";\n\nconst PILLARS = [
+import { getSiteContent } from "../lib/siteContent";
+
+const PILLARS = [
   {
     icon: "🎯",
     title: "Strategy-First Approach",
@@ -52,7 +54,8 @@ const STACK = [
   },
 ];
 
-export default async function About() {\n  const content = await getSiteContent();
+export default async function About() {
+  const content = await getSiteContent();
   return (
     <section id="about" className="py-20 px-5">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -62,8 +65,7 @@ export default async function About() {\n  const content = await getSiteContent(
             {content.aboutTitle}
           </h2>
           <p className="text-textSub mb-8">
-            CRC Core combines marketing, operations, and sourcing into one unified system
-            designed for scalable growth — not fragmented freelancers and disconnected tools.
+            {content.aboutDescription}
           </p>
 
           <div className="space-y-6">
