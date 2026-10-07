@@ -1,5 +1,6 @@
 import Image from "next/image";
 import CalendlyButton from "./CalendlyButton";
+import { getSiteContent } from "../lib/siteContent";
 
 const PLATFORMS = [
   "shopify",
@@ -14,7 +15,7 @@ const PLATFORMS = [
 
 const CERTS = ["amfori", "wrap", "smeta", "gots", "bci", "oekotex"];
 
-export default function Hero() {
+export default async function Hero() {\n  const content = await getSiteContent();
   return (
     <section className="relative pt-16 pb-20 px-5 text-center overflow-hidden">
       {/* soft purple radial glow behind the headline */}
@@ -22,11 +23,11 @@ export default function Hero() {
 
       <p className="inline-flex items-center gap-2 text-sm text-textSub mb-5">
         <span className="w-2 h-2 rounded-full bg-glow inline-block" />
-        The Center That Scales Everything
+        {content.heroEyebrow}
       </p>
 
       <h1 className="text-4xl md:text-6xl font-bold max-w-3xl mx-auto leading-tight">
-        A Complete Brand &amp; An <span className="grad">E-Commerce System</span>
+        {content.heroTitle.includes("E-Commerce") ? <>A Complete Brand &amp; An <span className="grad">E-Commerce System</span></> : content.heroTitle}
       </h1>
 
       <p className="max-w-xl mx-auto mt-6 text-textSub">
@@ -40,7 +41,7 @@ export default function Hero() {
           href="#cases"
           className="border border-border px-6 py-3 rounded-full font-medium text-textSub hover:text-white hover:border-accent transition-colors"
         >
-          See Our Work
+          {content.heroSecondaryCta}
         </a>
       </div>
 
