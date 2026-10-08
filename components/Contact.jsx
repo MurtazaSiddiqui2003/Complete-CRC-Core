@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import CalendlyButton from "./CalendlyButton";\n
+import CalendlyButton from "./CalendlyButton";
+
 export default function Contact({ content }) {
   const [status, setStatus] = useState("idle");
 
@@ -31,7 +32,7 @@ export default function Contact({ content }) {
   return (
     <section id="contact" className="py-20 px-5">
       <div className="max-w-2xl mx-auto bg-card border border-border rounded-2xl p-8 md:p-12 text-center relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(124,58,237,0.2),transparent_60%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_0%,rgba(124,58,237,0.2),transparent_60%)] />
         <p className="text-sm text-glow mb-3">{content?.contactEyebrow || "Ready to Scale?"}</p>
         <h2 className="text-3xl md:text-4xl font-bold mb-4">{content?.contactTitle || <>One system. <br /><span className="grad">Built to scale.</span></>}</h2>
         <p className="text-textSub mb-8">{content?.contactDescription || "Tell us about your brand and let's talk about what it would take to build your complete growth system."}</p>
