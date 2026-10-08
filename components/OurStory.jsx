@@ -54,7 +54,7 @@ export default function OurStory() {
         <div>
           <p className="text-sm text-glow mb-3">Our Story</p>
           <h2 className="text-3xl md:text-4xl font-bold mb-5">
-            The <span className="grad">CRC Core</span> Origin
+            The CRC Core Origin
           </h2>
           <p className="text-textSub mb-8">
             We started with a simple observation — great products were dying inside broken

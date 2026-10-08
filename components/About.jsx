@@ -1,3 +1,5 @@
+import { getSiteContent } from "../lib/siteContent";
+
 const PILLARS = [
   {
     icon: "🎯",
@@ -52,18 +54,18 @@ const STACK = [
   },
 ];
 
-export default function About() {
+export default async function About() {
+  const content = await getSiteContent();
   return (
     <section id="about" className="py-20 px-5">
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
         <div>
-          <p className="text-sm text-glow mb-3">Who We Are</p>
+          <p className="text-sm text-glow mb-3">{content.aboutEyebrow}</p>
           <h2 className="text-3xl md:text-4xl font-bold leading-tight mb-5">
-            We are not a service agency. We are a <span className="grad">system builder.</span>
+            {content.aboutTitle}
           </h2>
           <p className="text-textSub mb-8">
-            CRC Core combines marketing, operations, and sourcing into one unified system
-            designed for scalable growth — not fragmented freelancers and disconnected tools.
+            {content.aboutDescription}
           </p>
 
           <div className="space-y-6">
